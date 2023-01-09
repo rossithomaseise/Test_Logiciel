@@ -26,13 +26,14 @@ US-5-recuperer_texte (branche)
   --> US 5 : Vérification JSON et (si privée) vérification appartenance base de donnée (commit)
   --> US 5 : Récupération texte dans la base de donnée et Envoi (commit)
   --> US 5 : Test récupérer texte (commit) 
+      curl -X GET 127.0.0.1:<port>/id_texte -H "Content-Type: application/json" -d '{"username":"value1", "password":"value2"}' (si texte privé)
       curl -X GET 127.0.0.1:<port>/id_texte
 
 US-6-recuperer_historique_texte (branche)
   --> US 6 : Vérification JSON et appartenance base de donnée (commit)curl -X GET 127.0.0.1:<port>/isalive
   --> US 6 : Récupération de tous les textes dans la base de donnée et Envoi (commit)
   --> US 6 : Test récupérer historique texte (commit)
-      curl -X GET 127.0.0.1:<port>/historique_texte
+      curl -X GET 127.0.0.1:<port>/historique_texte -H "Content-Type: application/json" -d '{"username":"value1", "password":"value2"}'
 
 Base de donnée (texte.db) :
 
