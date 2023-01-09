@@ -1,5 +1,16 @@
 Technologies utilisées : python3, Flask, sqlite3, unittest
 
+Commandes Github :
+
+git add <file.py> (ou git add *)
+git commit -m "blablabla"
+git push origin US-blablabla
+git pull-request (ou pull requests dans l'interface graphique)
+// modification si besoin et re push
+git checkout master
+git pull origin master
+git merge master US-blablabla (régler conflit)
+
 Architecture (fichiers user_server.py et test_user_server.py et texte.db et texte.sql) :
 
 US-1-creation_serveur (branche)
