@@ -3,6 +3,7 @@ Technologies utilisées : python3, Flask, sqlite3, unittest
 Commandes Github :
 
 git add <file.py> (ou git add *)
+
 git commit -m "blablabla"
 git push origin US-blablabla
 git pull-request (ou pull requests dans l'interface graphique)
