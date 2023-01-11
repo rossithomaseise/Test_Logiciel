@@ -1,22 +1,64 @@
 <h1> API Pastebin </h1>
 
-<h4>Technologies utilisées : </h4>
+<h4> Technologies utilisées : </h4>
 
 python3, Flask, sqlite3, unittest
 
-Commandes Github :
+<h4> Créer votre environnement python </h4>
+
+(sudo apt install python3.8-venv)
+
+python3 -m venv env
+
+source env/bin/activate
+
+pip install -r requirements.txt
+
+<h4> Workflow Github : </h4>
+
+git checkout -b US-blablabla
 
 git add <file.py> (ou git add *)
 
 git commit -m "blablabla"
+
 git push origin US-blablabla
+
 git pull-request (ou pull requests dans l'interface graphique)
+
 // modification si besoin et re push
+
 git checkout master
+
 git pull origin master
+
 git merge master US-blablabla (régler conflit)
 
-Architecture (fichiers user_server.py et test_user_server.py et texte.db et texte.sql) :
+<h4> Commandes Github utiles : </h4>
+
+git branch -a (liste les branches)
+
+git checkout <branch> (pointe vers la branche indiquée)
+
+<h4>Architecture </h4> : 
+  
+user_server.py : API
+
+test_user_server.py : test API
+  
+texte.db : base de donnnée
+  
+texte.sql : code pour créer et remplir la base de donnée
+  
+.gitignore : fichiers ignoré par git
+  
+.pylintrc : fichier pour analyse static du code python
+  
+requirements.txt : liste des packages python
+  
+
+  
+
 
 US-1-creation_serveur (branche)
   --> US 1 : Création serveur (commit)
