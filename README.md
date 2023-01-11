@@ -62,7 +62,8 @@ Vous trouverez ici les différentes tâches réalisées :
   
 US-1-creation_serveur (branche) \
     --> US 1 : Création serveur (commit) \
-    --> US 1 : Test création serveur (commit) avec curl -X GET 127.0.0.1:<port>/isalive
+    --> US 1 : Test création serveur (commit) avec : \
+    curl -X GET 127.0.0.1:<port>/isalive
 
 US-2-creation-base_de_donnee (branche) \
    --> US 2 : Création base de donnée (commit) \
@@ -70,12 +71,14 @@ US-2-creation-base_de_donnee (branche) \
 
 US-3-creation_compte (branche) \
   --> US 3 : Création compte (commit) \
-  --> US 3 : Test création compte (commit) avec curl -v -X POST 127.0.0.1:9009/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2"}'
+  --> US 3 : Test création compte (commit) avec : \
+  curl -v -X POST 127.0.0.1:9009/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2"}'
 
 US-4-ajout_texte (branche) \
   --> US 4 : Vérification JSON et (si Utilisateur) vérification appartenance base de donnée (commit) \
   --> US 4 : Insertion texte dans la base de donnée et renvoie lien (commit) \
-  --> US 4 : Test ajout texte (commit) avec curl -v -X POST 127.0.0.1:9009/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2", "texte":"value3","privé":"value4"}'
+  --> US 4 : Test ajout texte (commit) avec : \
+  curl -v -X POST 127.0.0.1:9009/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2", "texte":"value3","privé":"value4"}'
   
 US-5-recuperer_texte (branche) \
   --> US 5 : Vérification JSON et (si privée) vérification appartenance base de donnée (commit) \
@@ -85,9 +88,10 @@ US-5-recuperer_texte (branche) \
       curl -X GET 127.0.0.1:<port>/id_texte (si texte publique)
 
 US-6-recuperer_historique_texte (branche) \
-  --> US 6 : Vérification JSON et appartenance base de donnée (commit) avec curl -X GET 127.0.0.1:<port>/isalive \
+  --> US 6 : Vérification JSON et appartenance base de donnée (commit) \
   --> US 6 : Récupération de tous les textes dans la base de donnée et Envoi (commit) \
-  --> US 6 : Test récupérer historique texte (commit) avec curl -X GET 127.0.0.1:<port>/historique_texte -H "Content-Type: application/json" -d '{"username":"value1", "password":"value2"}'
+  --> US 6 : Test récupérer historique texte (commit) avec : \
+  curl -X GET 127.0.0.1:<port>/historique_texte -H "Content-Type: application/json" -d '{"username":"value1", "password":"value2"}'
 
 <h4> Base de donnée : </h4> 
 
