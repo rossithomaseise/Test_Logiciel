@@ -24,15 +24,13 @@ git commit -m "blablabla"
 
 git push origin US-blablabla
 
-git pull-request (ou pull requests dans l'interface graphique)
+pull requests dans l'interface graphique
 
 // modification si besoin et re push
 
-git checkout master
+merge depuis l'interface graphique
 
-git pull origin master
-
-git merge master US-blablabla (régler conflit)
+git branch -d US-blablabla  (remove the branch)
 
 <h4> Commandes Github utiles : </h4>
 
