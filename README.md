@@ -6,7 +6,7 @@ python3, Flask, sqlite3, unittest
 
 <h4> Créer votre environnement python </h4>
 
-(sudo apt install python3.8-venv)
+sudo apt install python3.8-venv
 
 python3 -m venv env
 
@@ -40,7 +40,7 @@ git branch -a (liste les branches)
 
 git checkout <branch> (pointe vers la branche indiquée)
 
-<h4>Architecture </h4> : 
+<h4>Architecture : </h4>  
   
 user_server.py : API
 
@@ -56,13 +56,14 @@ texte.sql : code pour créer et remplir la base de donnée
   
 requirements.txt : liste des packages python
   
+<h4> User Story </h4>
 
+Vous trouverez ici les différentes tâches réalisées :
   
-
-
 US-1-creation_serveur (branche)
-  --> US 1 : Création serveur (commit)
-  --> US 1 : Test création serveur (commit) 
+  
+  --> US 1 : Création serveur (commit) \
+  --> US 1 : Test création serveur (commit) \
       curl -X GET 127.0.0.1:<port>/isalive
 
 US-2-creation-base_de_donnee (branche)
