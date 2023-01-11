@@ -61,9 +61,9 @@ requirements.txt : liste des packages python
 Vous trouverez ici les différentes tâches réalisées :
   
 US-1-creation_serveur (branche) \
-  &nbsp;--> US 1 : Création serveur (commit) \
-  &nbsp;--> US 1 : Test création serveur (commit) \
-      curl -X GET 127.0.0.1:<port>/isalive
+    --> US 1 : Création serveur (commit) \
+    --> US 1 : Test création serveur (commit) \
+              curl -X GET 127.0.0.1:<port>/isalive
 
 US-2-creation-base_de_donnee (branche)
    --> US 2 : Création base de donnée (commit)
