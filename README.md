@@ -4,7 +4,7 @@
 
 python3, Flask, sqlite3, unittest
 
-<h4> Créer votre environnement python </h4>
+<h4> Créer votre environnement python :</h4>
 
 sudo apt install python3.8-venv
 
@@ -56,7 +56,7 @@ texte.sql : code pour créer et remplir la base de donnée
   
 requirements.txt : liste des packages python
   
-<h4> User Story </h4>
+<h4> User Story :</h4>
 
 Vous trouverez ici les différentes tâches réalisées :
   
