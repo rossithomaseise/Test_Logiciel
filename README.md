@@ -1,4 +1,6 @@
-Technologies utilisées : python3, Flask, sqlite3, unittest
+<h1>Technologies utilisées : </h1>
+
+python3, Flask, sqlite3, unittest
 
 Commandes Github :
 
