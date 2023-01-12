@@ -11,7 +11,7 @@ Options:
 
 import logging
 from docopt import docopt
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response
 
 APP = Flask(__name__)
 

@@ -4,7 +4,6 @@ import unittest
 import shlex
 import time
 import subprocess
-from user_server import *
 import requests
 
 class TestUserSrv(unittest.TestCase):
