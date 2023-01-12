@@ -29,9 +29,10 @@ def get_text(text_id):
     return ligne[0]
 
 def get_texts_user(username,password):
-    c.execute("SELECT * FROM Utilisateur_possede_texte")
+    c.execute("SELECT id FROM Utilisateur WHERE identifiant=(?) and mot_de_passe=(?)",[username,password])
+    id_user=c.fetchone()[0]
+    c.execute("SELECT * FROM Utilisateur_possede_texte WHERE id_utilisateur=(?)",[id_user])
     table=c.fetchall()
-    #texts = [[table[i][0],table[i][1]] for i in range(len(table))]
     texts = [get_text(table[i][1]) for i in range(len(table))]
     return texts
 
