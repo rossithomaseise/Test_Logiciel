@@ -1,5 +1,4 @@
 import sqlite3
-import random
 
 conn = sqlite3.connect('Textes.db')
 conn.row_factory = sqlite3.Row
@@ -11,18 +10,17 @@ def get_users():
     res = [[ligne[j][i] for i in range(3)] for j in range (len(ligne))]
     return res
 
-def get_user(id):
-    c.execute("SELECT * FROM Utilisateur WHERE id = (?);",[id])
+def get_user(user_id):
+    c.execute("SELECT * FROM Utilisateur WHERE id = (?);",[user_id])
     ligne = c.fetchone()
     return [ligne[i] for i in range(3)]
 
 def add_user(username,password):
     c.execute("INSERT INTO Utilisateur (identifiant,mot_de_passe) VALUES (?,?) ;",[username,password])
-    ligne = c.fetchone()
     conn.commit()
 
-def get_text(id):
-    c.execute("SELECT contenu FROM Texte WHERE id = (?);",[id])
+def get_text(text_id):
+    c.execute("SELECT contenu FROM Texte WHERE id = (?);",[text_id])
     ligne = c.fetchone()
     return ligne[0]
 
@@ -33,7 +31,6 @@ def get_texts():
 
 def add_text_public(text_content,is_private):
     c.execute("INSERT INTO Texte (contenu,est_privee) VALUES (?,?) ;",[text_content,is_private])
-    ligne = c.fetchone()
     conn.commit()
 
 def add_text_private(text_content,username,password):
@@ -43,7 +40,6 @@ def add_text_private(text_content,username,password):
     c.execute("SELECT id FROM Utilisateur WHERE identifiant = (?) AND mot_de_passe = (?)", [username,password])
     id_user = c.fetchone()[0]
     c.execute("INSERT INTO Utilisateur_possede_texte VALUES (?,?)", [id_user,id_text])
-    ligne = c.fetchone()
     conn.commit()
 
 
