@@ -26,11 +26,13 @@ CREATE TABLE Utilisateur_possede_texte
 );
 
 INSERT INTO Utilisateur (identifiant,mot_de_passe) VALUES ("youss","Yellow");
-SELECT * FROM Utilisateur;
+INSERT INTO Utilisateur (identifiant,mot_de_passe) VALUES ("FredeRick","VeryS@fe14");
 
 INSERT INTO Texte (contenu,est_privee) VALUES ("Une belle phrase",FALSE);
-SELECT * FROM Texte;
+INSERT INTO Texte (contenu,est_privee) VALUES ("Une autre belle phrase",TRUE);
+INSERT INTO Texte (contenu,est_privee) VALUES ("Es una linda frase",TRUE);
 
-INSERT INTO Utilisateur_possede_texte (id_utilisateur,id_texte) SELECT (SELECT id FROM Utilisateur WHERE identifiant = "string" AND mot_de_passe = "tanga") as id_utilisateur,
-(SELECT id FROM Texte WHERE contenu = "Mon string est tendu" AND est_privee = FALSE) as id_texte;
-SELECT * FROM Utilisateur_possede_texte;
+INSERT INTO Utilisateur_possede_texte (id_utilisateur,id_texte) SELECT (SELECT id FROM Utilisateur WHERE identifiant = "youss" AND mot_de_passe = "Yellow") as id_utilisateur,
+(SELECT id FROM Texte WHERE contenu = "Une autre belle phrase") as id_texte;
+INSERT INTO Utilisateur_possede_texte (id_utilisateur,id_texte) SELECT (SELECT id FROM Utilisateur WHERE identifiant = "youss" AND mot_de_passe = "Yellow") as id_utilisateur,
+(SELECT id FROM Texte WHERE contenu = "Es una linda frase") as id_texte;
