@@ -55,9 +55,9 @@ class TestDBFunctions(unittest.TestCase):
         self.assertEqual(text,"Fredosaure")
 
     def test_get_texts_db(self):
-        list = get_texts()
-        self.assertEqual(list[0],"Une belle phrase")
-        self.assertEqual(list[1],"Une autre belle phrase")
+        list_text = get_texts()
+        self.assertEqual(list_text[0],"Une belle phrase")
+        self.assertEqual(list_text[1],"Une autre belle phrase")
 
     def test_get_texts_user_db(self):
         texts=get_texts_user("youss","Yellow")
