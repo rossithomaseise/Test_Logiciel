@@ -34,5 +34,14 @@ class TestUserSrv(unittest.TestCase):
         response = requests.get(self.SrvUrl+"/isalive", timeout=10)
         self.assertEqual(response.status_code,200)
 
+
+    def test_login(self):
+        response = requests.post(self.SrvUrl+"/login", timeout=10)
+        self.assertEqual(response.status_code,400) #missing json payload
+        response = requests.post(self.SrvUrl+"/login",json={"key": "value"}, timeout=10)
+        self.assertEqual(response.status_code,400) # bad json payload
+        response = requests.post(self.SrvUrl+"/login",json={"username":"value1", "password":"value2"}, timeout=10)
+        self.assertEqual(response.status_code,200)
+
 if __name__ == '__main__':
     unittest.main()
