@@ -41,10 +41,10 @@ class TestDBFunctions(unittest.TestCase):
         self.assertEqual(text,"Une autre belle phrase")
 
     def test_add_text_db(self):
-        id_text = add_text_public("Es ist ein schône Satz",False)
+        id_text = add_text("Es ist ein schône Satz",False)
         text = get_text(id_text)
         self.assertEqual(text,"Es ist ein schône Satz")
-        id_text = add_text_public("Nous sommes le 12 Janvier 2023",False)
+        id_text = add_text("Nous sommes le 12 Janvier 2023",False)
         text = get_text(id_text)
         self.assertEqual(text,"Nous sommes le 12 Janvier 2023")
 
@@ -69,17 +69,6 @@ class TestDBFunctions(unittest.TestCase):
         texts=get_texts_user("youss","Yellow")
         self.assertEqual(texts[0],"Une autre belle phrase")
         self.assertEqual(texts[1],"Es una linda frase")
-
-    def test_add_text_public_db(self):
-        id_user=add_user("JulienGenty","Mo!td$p@sse")
-        user=get_user(id_user)
-        self.assertEqual(user[1],"JulienGenty")
-        self.assertEqual(user[2],"Mo!td$p@sse")
-
-        id_user=add_user("Mai","HerPAssw0rd")
-        user=get_user(id_user)
-        self.assertEqual(user[1],"Mai")
-        self.assertEqual(user[2],"HerPAssw0rd")
         
 
 if __name__ == '__main__':
