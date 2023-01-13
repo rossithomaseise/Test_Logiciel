@@ -6,7 +6,7 @@ c = conn.cursor()
 def init_db():
     
 
-    with open('texte.sql', 'r') as sql_file:
+    with open('texte.sql', 'r',encoding="utf-8") as sql_file:
         sql_script = sql_file.read()
 
     c.executescript(sql_script)
@@ -29,9 +29,9 @@ def init_db():
 
 
 def valid_user(username,password):
-    any(raw in c.execute('SELECT * FROM  Utilisateur')):
-        if raw["identifiant"] == username and raw["mot_de_passe"] == password:
-            return True
+    users_list=c.execute('SELECT * FROM  Utilisateur')
+    if(any(raw['identifiant'] == username and raw['mot_de_passe'] == password for raw in users_list)):
+        return True
     return False
 
 
