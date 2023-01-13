@@ -1,7 +1,9 @@
 """  Test database functions"""
  
 import unittest
-from functions_db import add_user,get_user,get_users,get_texts_user,add_text,add_text_private,get_text,get_texts
+
+from functions_db import add_user,get_user,get_users,get_texts_user,add_text_public,add_text_private,get_text,get_texts
+
 
 
 class TestDBFunctions(unittest.TestCase):
@@ -39,17 +41,21 @@ class TestDBFunctions(unittest.TestCase):
         self.assertEqual(text,"Une autre belle phrase")
 
     def test_add_text_db(self):
-        id_text = add_text("Es ist ein schône Satz",False)
+        id_text = add_text_public("Es ist ein schône Satz",False)
         text = get_text(id_text)
         self.assertEqual(text,"Es ist ein schône Satz")
-        id_text = add_text("Nous sommes le 12 Janvier 2023",False)
+        id_text = add_text_public("Nous sommes le 12 Janvier 2023",False)
         text = get_text(id_text)
         self.assertEqual(text,"Nous sommes le 12 Janvier 2023")
 
     def test_add_text_private_db(self):
+
+        add_user("youss","Yellow")
         id_text = add_text_private("Es ist ein schône Satz","youss","Yellow")
         text = get_text(id_text)
         self.assertEqual(text,"Es ist ein schône Satz")
+        add_user("FredeRick","VeryS@fe14")
+
         id_text = add_text_private("Fredosaure","FredeRick","VeryS@fe14")
         text = get_text(id_text)
         self.assertEqual(text,"Fredosaure")
