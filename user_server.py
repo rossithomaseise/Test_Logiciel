@@ -18,6 +18,7 @@ import functions_db as db
 APP = Flask(__name__)
 SCHEMA = JsonSchema(APP)
 
+
 @APP.errorhandler(JsonValidationError)
 def validation_error(json_error):
     error = { \
@@ -51,47 +52,43 @@ def login():
         return Response(status=200)
     return Response(status=400)
 
-STRING_SCHEMA ={ \
+TEXT_SCHEMA_PUBLIC = { \
     "type" : "object", \
-    "required" : ["texte", "privé"], \
+    "required" : ["id"], \
+    "properties" : { \
+        # "username" : {"type" : "string"}, \
+        # "password" : {"type" : "string"}, \
+        "id" : {"type" : "integer"}, \
+    }, \
+}
+@APP.route('/get_text_public', methods=['GET'])
+@SCHEMA.validate(TEXT_SCHEMA_PUBLIC)
+def get_text_public():
+    json_payload = request.json
+    if json_payload is not None:
+        res = db.get_text(json_payload['id'])
+        return res
+    return Response(status=400)
+
+TEXT_SCHEMA_PRIVATE = { \
+    "type" : "object", \
+    "required" : ["id"], \
     "properties" : { \
         "username" : {"type" : "string"}, \
         "password" : {"type" : "string"}, \
-        "texte" : {"type" : "string"}, \
-        "privé" : {"type" : "boolean"}, \
+        "id" : {"type" : "integer"}, \
     }, \
 }
-
-@APP.route('/add_txt', methods=['POST'])
-@SCHEMA.validate(STRING_SCHEMA)
-def add_text():
+@APP.route('/get_text_private', methods=['GET'])
+@SCHEMA.validate(TEXT_SCHEMA_PRIVATE)
+def get_text_private():
     json_payload = request.json
     if json_payload is not None:
-        if json_payload['privé'] is False :
-            response = db.add_text_public(json_payload['texte'], json_payload['privé'])
-            print(db.get_users())
-            #print(json_payload)
-            print("ID du texte : ")
-            print(response)
-            state = 200
-        else:
-            try:
-                response = db.add_text_private(json_payload['texte'], json_payload['username'],json_payload['password'])
-                if response is not False:
-                    #print(json_payload)
-                    print("ID du texte : ")
-                    print(response)
-                    state = 200
-                else:
-                    
-                    state = 400
-            except KeyError:
-                print("L'ajout d'un lien privé nécessite un nom d'utilisateur et un mot de passe valide")
-                state = 400
-
-
-    return Response(status=state)
-    
+        if(db.valid_user(json_payload['username'], json_payload['password'])==False):
+            return "Bad username"
+        res = db.get_text(json_payload['id'])
+        return res
+    return Response(status=400)
 
 if __name__ == '__main__':
     ARGS = docopt(__doc__)
