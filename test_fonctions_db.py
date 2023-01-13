@@ -2,7 +2,7 @@
  
 import unittest
 
-from functions_db import add_user,get_user,get_users,get_texts_user,add_text_public,add_text_private,get_text,get_texts
+from functions_db import add_user,get_user,get_users,get_texts_user,add_text,add_text_private,get_text,get_texts
 
 
 
