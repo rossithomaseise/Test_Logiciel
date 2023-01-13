@@ -5,13 +5,15 @@ import shlex
 import time
 import subprocess
 import requests
-from user_server import validation_error,is_alive, login, add_text
+import functions_db as db
+
+db.init_db()
 
 class TestUserSrv(unittest.TestCase):
     """ Class for unit test"""
     srv_sub_process = None
 
-    TestPort = "8888"
+    TestPort = "8889"
     SrvAddr = "127.0.0.1"
     SrvUrl = "http://" + SrvAddr + ":" + TestPort
 
@@ -41,27 +43,18 @@ class TestUserSrv(unittest.TestCase):
         self.assertEqual(response.status_code,400) #missing json payload
         response = requests.post(self.SrvUrl+"/login",json={"key": "value"}, timeout=10)
         self.assertEqual(response.status_code,400) # bad json payload
-        response = requests.post(self.SrvUrl+"/login",json={"username":"value1", "password":"value2"}, timeout=10)
+        response = requests.post(self.SrvUrl+"/login",json={"username":"youss", "password":"Yellow"}, timeout=10)
         self.assertEqual(response.status_code,200)
 
-    def test_add_text(self):
-        response = requests.post(self.SrvUrl+"/add_txt", timeout=10)
-        self.assertEqual(response.status_code,400) #missing json payload
-        response = requests.post(self.SrvUrl+"/add_txt",json={"key": "value"}, timeout=10)
-        self.assertEqual(response.status_code,400) # bad json payload
-        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"value2","texte":"blablabla","privé":False}, timeout=10)
-        self.assertEqual(response.status_code,200)
-        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"value2","texte":"12345789","privé":True}, timeout=10)
-        self.assertEqual(response.status_code,200)
-        response = requests.post(self.SrvUrl+"/add_txt",json={"texte":"blablabla","privé":False}, timeout=10)
-        self.assertEqual(response.status_code,200)
-        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"value2","texte":"blablabla","privé":False}, timeout=10)
-        self.assertEqual(response.status_code,200)
-        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"fake_password","texte":"blablabla","privé":True}, timeout=10)
-        self.assertEqual(response.status_code,400)
-        response = requests.post(self.SrvUrl+"/add_txt",json={"texte":"blablabla","privé":True}, timeout=10)
-        self.assertEqual(response.status_code,400)
-        
+    def test_get_text_public(self):
+        response = requests.get(self.SrvUrl+'/get_text_public',json={"id":1}, timeout=10)
+        self.assertEqual(response.content.decode('ascii'),"Une belle phrase")
+
+    def test_get_text_private(self):
+        response = requests.get(self.SrvUrl+'/get_text_private',json={"id":2,"username":"youss", "password":"Yellow"}, timeout=10)
+        self.assertEqual(response.content.decode('ascii'),"Une autre belle phrase")
+        response = requests.get(self.SrvUrl+'/get_text_private',json={"id":3,"username":"youss", "password":"Yellow"}, timeout=10)
+        self.assertEqual(response.content.decode('ascii'),"Es una linda frase")
 
 if __name__ == '__main__':
     unittest.main()
