@@ -31,8 +31,8 @@ class TestDBFunctions(unittest.TestCase):
         users=get_users()
         self.assertEqual(users[1][1],"FredeRick")
         self.assertEqual(users[-1][1],"Mai")
-        self.assertEqual(users[2][1],"JulienGenty")
-        self.assertEqual(users[2][2],"Mo!td$p@sse")
+        self.assertEqual(users[-2][1],"JulienGenty")
+        self.assertEqual(users[-2][2],"Mo!td$p@sse")
 
     def test_get_text_db(self):
         text = get_text(1);
