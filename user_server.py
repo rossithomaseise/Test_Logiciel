@@ -89,8 +89,10 @@ def add_text():
                 print("L'ajout d'un lien privé nécessite un nom d'utilisateur et un mot de passe valide")
                 state = 400
 
+
     return Response(status=state)
     
+
 if __name__ == '__main__':
     ARGS = docopt(__doc__)
     if ARGS['--port']:

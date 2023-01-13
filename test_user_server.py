@@ -62,5 +62,6 @@ class TestUserSrv(unittest.TestCase):
         response = requests.post(self.SrvUrl+"/add_txt",json={"texte":"blablabla","privé":True}, timeout=10)
         self.assertEqual(response.status_code,400)
         
+
 if __name__ == '__main__':
     unittest.main()

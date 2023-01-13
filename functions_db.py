@@ -41,7 +41,6 @@ def get_texts_user(username,password):
     texts = [get_text(table[i][1]) for i in range(len(table))]
     return texts
 
-  
 def add_text_public(text_content,is_private):
     c.execute("INSERT INTO Texte (contenu,est_privee) VALUES (?,?) ;",[text_content,is_private])
     conn.commit()
@@ -65,3 +64,7 @@ def add_text_private(text_content,username,password):
     except TypeError:
         print("L'utilisateur n'existe pas")
         return False
+
+
+    return id_text
+
