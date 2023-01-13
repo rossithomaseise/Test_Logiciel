@@ -1,12 +1,13 @@
 """  Test user server """
- 
+
 import unittest
 import shlex
 import time
 import subprocess
+import json
 import requests
 import functions_db as db
-from user_server import get_text_public,login,is_alive,get_text_private
+from user_server import get_text_public,login,is_alive,get_text_private #pylint: disable=unused-import
 
 db.init_db()
 
@@ -22,7 +23,7 @@ class TestUserSrv(unittest.TestCase):
         """ set up the server"""
         cmd = "flask --app user_server run --port="+self.TestPort
         args = shlex.split(cmd)
-        self.srv_sub_process = subprocess.Popen(args) #pylint: disable=consider-using-with 
+        self.srv_sub_process = subprocess.Popen(args) #pylint: disable=bad-option-value,useless-suppression, consider-using-with
         time.sleep(1)
 
     def tearDown(self):
@@ -56,6 +57,12 @@ class TestUserSrv(unittest.TestCase):
         self.assertEqual(response.content.decode('ascii'),"Une autre belle phrase")
         response = requests.get(self.SrvUrl+'/get_text_private',json={"id":3,"username":"youss", "password":"Yellow"}, timeout=10)
         self.assertEqual(response.content.decode('ascii'),"Es una linda frase")
+
+    def test_historique_texte(self):
+        response = requests.get(self.SrvUrl + "/historique_texte", json = {"username": "youss", "password": "Yellow"}, timeout = 10)
+        answer = json.loads((response.content).decode("utf-8"))
+        self.assertEqual((answer[0]),"Une autre belle phrase")
+        self.assertEqual((answer[1]),"Es una linda frase")
 
 if __name__ == '__main__':
     unittest.main()

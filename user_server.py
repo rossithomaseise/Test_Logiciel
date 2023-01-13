@@ -46,8 +46,6 @@ def login():
     json_payload = request.json
     if json_payload is not None:
         db.add_user(json_payload['username'], json_payload['password'])
-        print(db.get_users())
-        print(json_payload)
 
         return Response(status=200)
     return Response(status=400)
@@ -84,10 +82,19 @@ TEXT_SCHEMA_PRIVATE = { \
 def get_text_private():
     json_payload = request.json
     if json_payload is not None:
-        if(db.valid_user(json_payload['username'], json_payload['password'])==False):
+        if (not(db.valid_user(json_payload['username'], json_payload['password']))):
             return "Bad username"
         res = db.get_text(json_payload['id'])
         return res
+    return Response(status=400)
+
+@APP.route('/historique_texte',methods=['GET'])
+@SCHEMA.validate(LOGIN_SCHEMA)
+def historique_texte():
+    json_payload = request.json
+    if json_payload is not None:
+        texts = db.get_texts_user(json_payload['username'],json_payload['password'])
+        return texts
     return Response(status=400)
 
 if __name__ == '__main__':
