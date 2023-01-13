@@ -29,7 +29,7 @@ def init_db():
 
 
 def valid_user(username,password):
-    for raw in c.execute('SELECT * FROM  Utilisateur'):
+    any(raw in c.execute('SELECT * FROM  Utilisateur')):
         if raw["identifiant"] == username and raw["mot_de_passe"] == password:
             return True
     return False
