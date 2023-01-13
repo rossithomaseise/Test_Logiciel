@@ -76,7 +76,9 @@ US-4-ajout_texte (branche) : \
   --> US 4 : Vérification JSON et (si Utilisateur) vérification appartenance base de donnée (commit) \
   --> US 4 : Insertion texte dans la base de donnée et renvoie lien (commit) \
   --> US 4 : Test ajout texte (commit) avec : \
-  curl -v -X POST 127.0.0.1:9009/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2", "texte":"value3","privé":"value4"}'
+  curl -v -X POST 127.0.0.1:9009/add_txt -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2", "texte":"value3","privé":True}'
+  privé is a boolean -> True or False
+  Username and password are not required if the string is public
   
 US-5-recuperer_texte (branche) : \
   --> US 5 : Vérification JSON et (si privée) vérification appartenance base de donnée (commit) \
