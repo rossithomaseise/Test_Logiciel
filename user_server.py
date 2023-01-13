@@ -82,7 +82,7 @@ TEXT_SCHEMA_PRIVATE = { \
 def get_text_private():
     json_payload = request.json
     if json_payload is not None:
-        if(db.valid_user(json_payload['username'], json_payload['password'])==False):
+        if (not(db.valid_user(json_payload['username'], json_payload['password']))):
             return "Bad username"
         res = db.get_text(json_payload['id'])
         return res

@@ -4,10 +4,10 @@ import unittest
 import shlex
 import time
 import subprocess
+import json
 import requests
 import functions_db as db
-import json
-from user_server import get_text_public,login,is_alive,get_text_private
+from user_server import get_text_public,login,is_alive,get_text_private #pylint: disable=unused-import
 
 db.init_db()
 
@@ -23,7 +23,7 @@ class TestUserSrv(unittest.TestCase):
         """ set up the server"""
         cmd = "flask --app user_server run --port="+self.TestPort
         args = shlex.split(cmd)
-        self.srv_sub_process = subprocess.Popen(args) #pylint: disable=consider-using-with
+        self.srv_sub_process = subprocess.Popen(args) #pylint: disable=consider-using-with #pylint: disable=bad-option-value 
         time.sleep(1)
 
     def tearDown(self):
