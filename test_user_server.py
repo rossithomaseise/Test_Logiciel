@@ -23,7 +23,7 @@ class TestUserSrv(unittest.TestCase):
         """ set up the server"""
         cmd = "flask --app user_server run --port="+self.TestPort
         args = shlex.split(cmd)
-        self.srv_sub_process = subprocess.Popen(args) #pylint: disable=consider-using-with #pylint: disable=bad-option-value 
+        self.srv_sub_process = subprocess.Popen(args) #pylint: disable=bad-option-value,useless-suppression, consider-using-with
         time.sleep(1)
 
     def tearDown(self):
