@@ -1,6 +1,6 @@
 import setuptools
 
-with open("README.md", "r") as fh:
+with open("README.md", "r") as fh: #pylint: disable=unspecified-encoding
     long_description = fh.read()
 
 setuptools.setup(
@@ -20,4 +20,3 @@ setuptools.setup(
     ],
     python_requires='>=3.8',
 )
-
