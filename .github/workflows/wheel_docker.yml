@@ -31,4 +31,4 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: pastebin-0.0.1-py2.py3-none-any
+        name: pastebin-0.0.1-py2.py3-none-any.whl
