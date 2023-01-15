@@ -3,33 +3,43 @@ name: wheel_docker
 on: [push]
 
 jobs:
-  job_1:
-    build:
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          python-version: ["3.8"]
-      steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          python3 -m pip install -r requirements.txt
-          python3 -m pip install wheel setuptools
-      - name: create wheel file
-        run: |
-          mkdir -p wheel/codePasteBin
-          cp functions_db.py wheel/codePasteBin/
-          cp README.md wheel/
-          cp setup.py wheel/
-          cd wheel/
-          python3 setup.py bdist_wheel --universal
-          cd dist/
-      #- name: Download a single artifact
-      #  uses: actions/download-artifact@v3
-      #  with:
-      #    name: wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install -r requirements.txt
+        python3 -m pip install wheel setuptools
+    - name: create wheel file
+      run: |
+        mkdir -p wheel/codePasteBin
+        cp functions_db.py wheel/codePasteBin/
+        cp README.md wheel/
+        cp setup.py wheel/
+        cd wheel/
+        python3 setup.py bdist_wheel --universal
+        cd ..
+    #- name: Download a single artifact
+    #  uses: actions/download-artifact@v3
+    #  with:
+    #    name: wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl
+    - name : create docker file
+      run: |
+        mkdir docker
+        cp user_server.py docker/app.py
+        cp requirements.txt docker/
+        cp texte.sql docker/
+        cp Dockerfile docker/
+        cp wheel/dist/wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl docker/
+        cd docker/
+        docker build -t dockerpastebin .
+        # push sur le registry docker de github 
