@@ -26,8 +26,8 @@ jobs:
         cp README.md wheel/
         cp setup.py wheel/
         cd wheel/
-	      python3 setup.py bdist_wheel --universal
-	      cd dist/
+	python3 setup.py bdist_wheel --universal
+	cd dist/
     - name: Download a single artifact
     uses: actions/download-artifact@v3
     with:
