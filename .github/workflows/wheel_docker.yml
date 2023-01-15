@@ -39,7 +39,7 @@ jobs:
         cp requirements.txt docker/
         cp texte.sql docker/
         cp Dockerfile docker/
-        cp wheel/dist/wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl docker/
+        cp wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl docker/
         cd docker/
         docker build -t dockerpastebin .
         # push sur le registry docker de github 
