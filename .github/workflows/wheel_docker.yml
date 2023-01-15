@@ -1,0 +1,35 @@
+name: wheel_docker
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install -r requirements.txt
+        python3 -m pip install wheel setuptools
+    - name: create wheel file
+      run: |
+        mkdir -p wheel/codePasteBin
+        cp functions_db.py wheel/codePasteBin/
+        cp README.md wheel/
+	cp setup.py wheel/
+	cd wheel/
+	python3 setup.py bdist_wheel --universal
+	cd dist/
+    - name: Download a single artifact
+    uses: actions/download-artifact@v3
+    with:
+        name: pastebin-0.0.1-py2.py3-none-any
+
