@@ -73,7 +73,7 @@ def get_texts():
     ligne = c.fetchall()
     return [ligne[i][0] for i in range(len(ligne))]
 
-def add_text(text_content,is_private):
+def add_text_public(text_content,is_private):
     c.execute("INSERT INTO Texte (contenu,est_privee) VALUES (?,?) ;",[text_content,is_private])
     conn.commit()
 
@@ -84,12 +84,15 @@ def add_text(text_content,is_private):
   
 
 def add_text_private(text_content,username,password):
-    id_text = add_text(text_content,True)
+    add_text_public(text_content,True)
     c.execute("SELECT id FROM Texte ORDER BY id DESC LIMIT 1")
     id_text = c.fetchone()[0]
     c.execute("SELECT id FROM Utilisateur WHERE identifiant = (?) AND mot_de_passe = (?)", [username,password])
-    id_user = c.fetchone()[0]
-    c.execute("INSERT INTO Utilisateur_possede_texte VALUES (?,?)", [id_user,id_text])
-    conn.commit()
-
-    return id_text
+    try:
+        id_user = c.fetchone()[0]
+        c.execute("INSERT INTO Utilisateur_possede_texte VALUES (?,?)", [id_user,id_text])
+        conn.commit()
+        return id_text
+    except TypeError:
+        print("L'utilisateur n'existe pas")
+        return False

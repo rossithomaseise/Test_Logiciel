@@ -2,7 +2,7 @@
  
 import unittest
 
-from functions_db import add_user,get_user,get_users,get_texts_user,add_text,add_text_private,get_text,get_texts
+from functions_db import add_user,get_user,get_users,get_texts_user,add_text_public,add_text_private,get_text,get_texts
 
 
 
@@ -70,6 +70,16 @@ class TestDBFunctions(unittest.TestCase):
         self.assertEqual(texts[0],"Une autre belle phrase")
         self.assertEqual(texts[1],"Es una linda frase")
         
+    def test_add_text_public_db(self):
+        id_user=add_user("JulienGenty","Mo!td$p@sse")
+        user=get_user(id_user)
+        self.assertEqual(user[1],"JulienGenty")
+        self.assertEqual(user[2],"Mo!td$p@sse")
+
+        id_user=add_user("Mai","HerPAssw0rd")
+        user=get_user(id_user)
+        self.assertEqual(user[1],"Mai")
+        self.assertEqual(user[2],"HerPAssw0rd")
 
 if __name__ == '__main__':
     unittest.main()
