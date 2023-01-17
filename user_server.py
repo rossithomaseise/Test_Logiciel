@@ -46,6 +46,8 @@ def login():
     json_payload = request.json
     if json_payload is not None:
         db.add_user(json_payload['username'], json_payload['password'])
+        print(db.get_users())
+        print(json_payload)
 
         return Response(status=200)
     return Response(status=400)
@@ -82,7 +84,7 @@ TEXT_SCHEMA_PRIVATE = { \
 def get_text_private():
     json_payload = request.json
     if json_payload is not None:
-        if (not(db.valid_user(json_payload['username'], json_payload['password']))):
+        if(db.valid_user(json_payload['username'], json_payload['password'])==False):
             return "Bad username"
         res = db.get_text(json_payload['id'])
         return res
@@ -96,7 +98,10 @@ def historique_texte():
         texts = db.get_texts_user(json_payload['username'],json_payload['password'])
         return texts
     return Response(status=400)
-    
+
+
+
+
 STRING_SCHEMA ={ \
     "type" : "object", \
     "required" : ["texte", "privé"], \
@@ -112,9 +117,10 @@ STRING_SCHEMA ={ \
 @SCHEMA.validate(STRING_SCHEMA)
 def add_text():
     json_payload = request.json
+    print(json_payload)
     if json_payload is not None:
         if json_payload['privé'] is False :
-            response = db.add_text_public(json_payload['texte'], json_payload['privé'])
+            response = db.add_text(json_payload['texte'], json_payload['privé'])
             print(db.get_users())
             #print(json_payload)
             print("ID du texte : ")
@@ -129,13 +135,15 @@ def add_text():
                     print(response)
                     state = 200
                 else:
-                    
+                    print("1")
                     state = 400
             except KeyError:
                 print("L'ajout d'un lien privé nécessite un nom d'utilisateur et un mot de passe valide")
                 state = 400
 
+
     return Response(status=state)
+
     
 
 if __name__ == '__main__':
@@ -144,3 +152,4 @@ if __name__ == '__main__':
         APP.run(host='localhost', port=ARGS['--port'])
     else:
         logging.error("Wrong command line arguments")
+
