@@ -63,6 +63,25 @@ class TestUserSrv(unittest.TestCase):
         answer = json.loads((response.content).decode("utf-8"))
         self.assertEqual((answer[0]),"Une autre belle phrase")
         self.assertEqual((answer[1]),"Es una linda frase")
+        
+    def test_add_text(self):
+        response = requests.post(self.SrvUrl+"/add_txt", timeout=10)
+        self.assertEqual(response.status_code,400) #missing json payload
+        response = requests.post(self.SrvUrl+"/add_txt",json={"key": "value"}, timeout=10)
+        self.assertEqual(response.status_code,400) # bad json payload
+        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"value2","texte":"blablabla","privé":False}, timeout=10)
+        self.assertEqual(response.status_code,200)
+        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"value2","texte":"12345789","privé":True}, timeout=10)
+        self.assertEqual(response.status_code,200)
+        response = requests.post(self.SrvUrl+"/add_txt",json={"texte":"blablabla","privé":False}, timeout=10)
+        self.assertEqual(response.status_code,200)
+        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"value2","texte":"blablabla","privé":False}, timeout=10)
+        self.assertEqual(response.status_code,200)
+        response = requests.post(self.SrvUrl+"/add_txt",json={"username":"value1", "password":"fake_password","texte":"blablabla","privé":True}, timeout=10)
+        self.assertEqual(response.status_code,400)
+        response = requests.post(self.SrvUrl+"/add_txt",json={"texte":"blablabla","privé":True}, timeout=10)
+        self.assertEqual(response.status_code,400)
+        
 
 if __name__ == '__main__':
     unittest.main()
