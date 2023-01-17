@@ -6,6 +6,7 @@ import time
 import subprocess
 import requests
 import functions_db as db
+import json
 from user_server import get_text_public,login,is_alive,get_text_private
 
 db.init_db()
@@ -44,7 +45,7 @@ class TestUserSrv(unittest.TestCase):
         self.assertEqual(response.status_code,400) #missing json payload
         response = requests.post(self.SrvUrl+"/login",json={"key": "value"}, timeout=10)
         self.assertEqual(response.status_code,400) # bad json payload
-        response = requests.post(self.SrvUrl+"/login",json={"username":"youss", "password":"Yellow"}, timeout=10)
+        response = requests.post(self.SrvUrl+"/login",json={"userna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me":"youss", "password":"Yellow"}, timeout=10)
         self.assertEqual(response.status_code,200)
 
     def test_get_text_public(self):
