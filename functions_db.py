@@ -78,7 +78,7 @@ def add_text(text_content,is_private):
     conn.commit()
 
     #Récupérer l'id de l'utilisateur qu'on vient d'ajouter
-    c.execute("SELECT id FROM Texte WHERE contenu=(?)",[text_content])
+    c.execute("SELECT id FROM Texte WHERE contenu=(?) ORDER BY id DESC",[text_content])
     id_text=c.fetchone()[0]
     return id_text
   
