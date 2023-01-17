@@ -56,6 +56,8 @@ TEXT_SCHEMA_PUBLIC = { \
     "type" : "object", \
     "required" : ["id"], \
     "properties" : { \
+        # "username" : {"type" : "string"}, \
+        # "password" : {"type" : "string"}, \
         "id" : {"type" : "integer"}, \
     }, \
 }
@@ -64,7 +66,7 @@ TEXT_SCHEMA_PUBLIC = { \
 def get_text_public():
     json_payload = request.json
     if json_payload is not None:
-        res = db.get_text_public(json_payload['id'])
+        res = db.get_text(json_payload['id'])
         return res
     return Response(status=400)
 
@@ -84,7 +86,7 @@ def get_text_private():
     if json_payload is not None:
         if(db.valid_user(json_payload['username'], json_payload['password'])==False):
             return "Bad username"
-        res = db.get_text_private(json_payload['id'],json_payload['username'], json_payload['password'])
+        res = db.get_text(json_payload['id'])
         return res
     return Response(status=400)
 
