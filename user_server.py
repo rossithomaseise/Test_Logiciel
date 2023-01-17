@@ -90,6 +90,17 @@ def get_text_private():
         return res
     return Response(status=400)
 
+@APP.route('/historique_texte',methods=['GET'])
+@SCHEMA.validate(LOGIN_SCHEMA)
+def historique_texte():
+    json_payload = request.json
+    if json_payload is not None:
+        texts = db.get_texts_user(json_payload['username'],json_payload['password'])
+        return texts
+    return Response(status=400)
+
+
+
 
 STRING_SCHEMA ={ \
     "type" : "object", \

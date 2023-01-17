@@ -57,6 +57,11 @@ class TestUserSrv(unittest.TestCase):
         response = requests.get(self.SrvUrl+'/get_text_private',json={"id":3,"username":"youss", "password":"Yellow"}, timeout=10)
         self.assertEqual(response.content.decode('ascii'),"Es una linda frase")
 
+    def test_historique_texte(self):
+        response = requests.get(self.SrvUrl + "/historique_texte", json = {"username": "youss", "password": "Yellow"}, timeout = 10)
+        answer = json.loads((response.content).decode("utf-8"))
+        self.assertEqual((answer[0]),"Une autre belle phrase")
+        self.assertEqual((answer[1]),"Es una linda frase")
 
     def test_add_text(self):
         response = requests.post(self.SrvUrl+"/add_txt", timeout=10)
