@@ -19,6 +19,8 @@ def init_db():
     conn.commit()
     c.execute('INSERT INTO Texte (contenu,est_privee) VALUES ("Es una linda frase",TRUE)')
     conn.commit()
+    c.execute('INSERT INTO Texte (contenu,est_privee) VALUES ("Ceci est une phrase",FALSE)')
+    conn.commit()
     c.execute('INSERT INTO Utilisateur_possede_texte (id_utilisateur,id_texte) SELECT (SELECT id FROM Utilisateur WHERE identifiant = "youss" \
     AND mot_de_passe = "Yellow") as id_utilisateur,(SELECT id FROM Texte WHERE contenu = "Une autre belle phrase") as id_texte')
     conn.commit()
@@ -54,7 +56,17 @@ def get_users():
     res = [[ligne[j][i] for i in range(3)] for j in range (len(ligne))]
     return res
 
-def get_text(text_id):
+def get_text_public(text_id):
+    c.execute("SELECT * FROM Texte WHERE id = (?);",[text_id])
+    ligne = c.fetchone()
+    if(ligne[3]==True):
+        return "Error: trying to access a private text"
+    return ligne[2]
+
+def get_text_private(text_id,username,password):
+
+    if(valid_user(username,password) == False):
+        return "Invalid user"
     c.execute("SELECT contenu FROM Texte WHERE id = (?);",[text_id])
     ligne = c.fetchone()
     return ligne[0]
@@ -64,7 +76,7 @@ def get_texts_user(username,password):
     id_user=c.fetchone()[0]
     c.execute("SELECT * FROM Utilisateur_possede_texte WHERE id_utilisateur=(?)",[id_user])
     table=c.fetchall()
-    texts = [get_text(table[i][1]) for i in range(len(table))]
+    texts = [get_text_private(table[i][1],username,password) for i in range(len(table))]
     return texts
 
 
