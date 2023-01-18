@@ -49,14 +49,14 @@ class TestUserSrv(unittest.TestCase):
         self.assertEqual(response.status_code,200)
 
     def test_get_text_public(self):
-        response = requests.get(self.SrvUrl+'/get_text_public',json={"id":1}, timeout=10)
-        self.assertEqual(response.content.decode('ascii'),"Une belle phrase")
+        response = requests.get(self.SrvUrl+'/get_text_public',json={"id":3}, timeout=10)
+        self.assertEqual(response.content.decode('ascii'),"Ceci est une phrase")
 
     def test_get_text_private(self):
         response = requests.get(self.SrvUrl+'/get_text_private',json={"id":2,"username":"youss", "password":"Yellow"}, timeout=10)
-        self.assertEqual(response.content.decode('ascii'),"Une autre belle phrase")
-        response = requests.get(self.SrvUrl+'/get_text_private',json={"id":3,"username":"youss", "password":"Yellow"}, timeout=10)
         self.assertEqual(response.content.decode('ascii'),"Es una linda frase")
+        response = requests.get(self.SrvUrl+'/get_text_private',json={"id":3,"username":"youss", "password":"Yellow"}, timeout=10)
+        self.assertEqual(response.content.decode('ascii'),"Ceci est une phrase")
 
     def test_historique_texte(self):
         response = requests.get(self.SrvUrl + "/historique_texte", json = {"username": "youss", "password": "Yellow"}, timeout = 10)
