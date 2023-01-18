@@ -45,8 +45,7 @@ jobs:
         cp wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl docker/
         cd docker/
         #docker build -t dockerpastebin .
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"        
-
+        run: docker build . --file Dockerfile --tag $IMAGE_NAME --label "runnumber=${GITHUB_RUN_ID}"
     - name: Log in to registry
         # This is where you will update the personal access token to GITHUB_TOKEN
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
