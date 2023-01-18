@@ -58,11 +58,9 @@ jobs:
         echo IMAGE_ID=$IMAGE_ID
         echo VERSION=$VERSION
         docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-        docker push $IMAGE_ID:$VERSION 
+        docker push $IMAGE_ID:$VERSION
     -name: deploy docker on ovh
       run: |
-        SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54
-        mkdir docker-test-logiciel
-        cd docker-test-logiciel
-        docker pull ghcr.io/rossithomaseise/test-logiciel:devops-docker
-        docker run -d -p 8882:8882 test-logiciel:devops-docker
+        SSHPASS="polytech75" sshpass scp deploy.sh docker-CI@51.38.237.54:/home/docker-CI
+        SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
+        SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
