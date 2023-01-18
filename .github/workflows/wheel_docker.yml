@@ -61,6 +61,6 @@ jobs:
         docker push $IMAGE_ID:$VERSION
     - name: deploy docker
       run: |
-        SSHPASS="polytech75" sshpass scp deploy.sh docker-CI@51.38.237.54:/home/docker-CI
-        SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
-        SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
+        sshpass -v -p "polytech75" scp -oStrictHostKeyChecking=no toto docker-CI@51.38.237.54:/home/docker-CI
+        sshpass -p "polytech75" -e ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
+        sshpass -p "polytech75" -e ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
