@@ -125,7 +125,7 @@ def add_text():
             #print(json_payload)
             print("ID du texte : ")
             print(response)
-            state = 200
+            state = "200" + "\n" + "ID du texte: "+ str(response) +"\n"
         else:
             try:
                 response = db.add_text_private(json_payload['texte'], json_payload['username'],json_payload['password'])
@@ -133,16 +133,16 @@ def add_text():
                     #print(json_payload)
                     print("ID du texte : ")
                     print(response)
-                    state = 200
+                    state = "200" + "\n" + "ID du texte: "+ str(response) +"\n"
                 else:
                     print("1")
-                    state = 400
+                    return Response(status=400)
             except KeyError:
                 print("L'ajout d'un lien privé nécessite un nom d'utilisateur et un mot de passe valide")
-                state = 400
+                return Response(status=400)
 
 
-    return Response(status=state)
+    return state
 
     
 
