@@ -64,3 +64,4 @@ jobs:
         SSHPASS="polytech75" sshpass scp deploy.sh docker-CI@51.38.237.54:/home/docker-CI
         SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
         SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
+
