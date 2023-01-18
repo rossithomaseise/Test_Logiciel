@@ -59,7 +59,7 @@ jobs:
         echo VERSION=$VERSION
         docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
         docker push $IMAGE_ID:$VERSION 
-    -name : deploy docker on ovh
+    -name: deploy docker on ovh
       run: |
         SSHPASS="polytech75" sshpass -e ssh docker-CI@51.38.237.54
         mkdir docker-test-logiciel
