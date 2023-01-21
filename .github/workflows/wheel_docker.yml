@@ -62,7 +62,7 @@ jobs:
     - name: deploy docker
       run: |
         sshpass -v -p "polytech75" scp -oStrictHostKeyChecking=no deploy.sh docker-CI@51.38.237.54:/home/docker-CI
-        sshpass -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
-        sshpass -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- docker stop $(docker ps | grep ghcr.io/rossithomaseise/test-logiciel:devops-docker | awk '{print $1}' | head -n 1)
-        sshpass -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
+        sshpass -v -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
+        #sshpass -v -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- docker stop $(docker ps | grep ghcr.io/rossithomaseise/test-logiciel:devops-docker | awk '{print $1}' | head -n 1)
+        sshpass -v -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
        
