@@ -13,8 +13,11 @@ import logging
 from docopt import docopt
 from flask import Flask, Response, request, jsonify
 from flask_json_schema import JsonSchema, JsonValidationError
-#import functions_db as db
-import codePasteBin.functions_db as db
+
+try:
+    import functions_db as db
+except:
+    import codePasteBin.functions_db as db
 
 APP = Flask(__name__)
 SCHEMA = JsonSchema(APP)
