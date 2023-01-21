@@ -12,7 +12,9 @@ python3 -m venv env
 
 source env/bin/activate
 
-pip install -r requirements.txt
+pipreqs --force . (installation des dépendances dans un fichier requirements.txt)
+
+python3 -m pip install -r requirements.txt
 
 <h4> Workflow Github : </h4>
 
@@ -22,7 +24,7 @@ git add <file.py> (ou git add *)
 
 git commit -m "blablabla"
 
-git push origin US-blablabla
+git push origin US-blablablapipreqs --force .
 
 pull requests dans l'interface graphique
 
@@ -70,15 +72,15 @@ US-2-creation-base_de_donnee (branche) : \
 US-3-creation_compte (branche) : \
   --> US 3 : Création compte (commit) \
   --> US 3 : Test création compte (commit) avec : \
-  curl -v -X POST 127.0.0.1:9009/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2"}'
+  curl -v -X POST 127.0.0.1:<port>/login -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2"}'
 
 US-4-ajout_texte (branche) : \
   --> US 4 : Vérification JSON et (si Utilisateur) vérification appartenance base de donnée (commit) \
-  --> US 4 : Insertion texte dans la base de donnée et renvoie lien (commit) \
+  --> US 4 : Insertion texte dapipreqs --force .ns la base de donnée et renvoie lien (commit) \
   --> US 4 : Test ajout texte (commit) avec : \
-  curl -v -X POST 127.0.0.1:9009/add_txt -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2", "texte":"value3","privé":True}'
+  curl -v -X POST 127.0.0.1:<port>/add_txt -H "Content-Type: application/json"  -d '{"username":"value1", "password":"value2", "texte":"value3","privé":true}'
   privé is a boolean -> True or False
-  Username and password are not required if the string is public
+  Username and password are not required if the string is public. Attention: bien mettre true ou false en miniscule pour le json
   
 US-5-recuperer_texte (branche) : \
   --> US 5 : Vérification JSON et (si privée) vérification appartenance base de donnée (commit) \

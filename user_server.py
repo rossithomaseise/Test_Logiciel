@@ -47,6 +47,8 @@ def login():
     json_payload = request.json
     if json_payload is not None:
         db.add_user(json_payload['username'], json_payload['password'])
+        print(db.get_users())
+        print(json_payload)
 
         return Response(status=200)
     return Response(status=400)
@@ -55,8 +57,6 @@ TEXT_SCHEMA_PUBLIC = { \
     "type" : "object", \
     "required" : ["id"], \
     "properties" : { \
-        # "username" : {"type" : "string"}, \
-        # "password" : {"type" : "string"}, \
         "id" : {"type" : "integer"}, \
     }, \
 }
@@ -65,7 +65,7 @@ TEXT_SCHEMA_PUBLIC = { \
 def get_text_public():
     json_payload = request.json
     if json_payload is not None:
-        res = db.get_text(json_payload['id'])
+        res = db.get_text_public(json_payload['id'])
         return res
     return Response(status=400)
 
@@ -83,9 +83,9 @@ TEXT_SCHEMA_PRIVATE = { \
 def get_text_private():
     json_payload = request.json
     if json_payload is not None:
-        if (not(db.valid_user(json_payload['username'], json_payload['password']))):
+        if(db.valid_user(json_payload['username'], json_payload['password'])==False):
             return "Bad username"
-        res = db.get_text(json_payload['id'])
+        res = db.get_text_private(json_payload['id'],json_payload['username'], json_payload['password'])
         return res
     return Response(status=400)
 
@@ -98,9 +98,57 @@ def historique_texte():
         return texts
     return Response(status=400)
 
+
+
+
+STRING_SCHEMA ={ \
+    "type" : "object", \
+    "required" : ["texte", "privé"], \
+    "properties" : { \
+        "username" : {"type" : "string"}, \
+        "password" : {"type" : "string"}, \
+        "texte" : {"type" : "string"}, \
+        "privé" : {"type" : "boolean"}, \
+    }, \
+}
+
+@APP.route('/add_txt', methods=['POST'])
+@SCHEMA.validate(STRING_SCHEMA)
+def add_text():
+    json_payload = request.json
+    print(json_payload)
+    if json_payload is not None:
+        if json_payload['privé'] is False :
+            response = db.add_text(json_payload['texte'], json_payload['privé'])
+            print(db.get_users())
+            #print(json_payload)
+            print("ID du texte : ")
+            print(response)
+            state = "200" + "\n" + "ID du texte: "+ str(response) +"\n"
+        else:
+            try:
+                response = db.add_text_private(json_payload['texte'], json_payload['username'],json_payload['password'])
+                if response is not False:
+                    #print(json_payload)
+                    print("ID du texte : ")
+                    print(response)
+                    state = "200" + "\n" + "ID du texte: "+ str(response) +"\n"
+                else:
+                    print("1")
+                    return Response(status=400)
+            except KeyError:
+                print("L'ajout d'un lien privé nécessite un nom d'utilisateur et un mot de passe valide")
+                return Response(status=400)
+
+
+    return state
+
+    
+
 if __name__ == '__main__':
     ARGS = docopt(__doc__)
     if ARGS['--port']:
         APP.run(host='localhost', port=ARGS['--port'])
     else:
         logging.error("Wrong command line arguments")
+
