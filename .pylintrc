@@ -109,6 +109,7 @@ disable=
     format,
     # We anticipate #3512 where it will become optional
     fixme,
+    singleton-comparison,
 
 
 [REPORTS]
