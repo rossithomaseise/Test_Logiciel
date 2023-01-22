@@ -9,7 +9,7 @@ import requests
 import functions_db as db
 #from user_server import get_text_public,login,is_alive,get_text_private
 
-db.init_db()
+#db.init_db()
 
 class TestUserSrv(unittest.TestCase):
     """ Class for unit test"""

@@ -19,9 +19,10 @@ try:
 except:
     import codePasteBin.functions_db as db
 
+db.init_db()
+
 APP = Flask(__name__)
 SCHEMA = JsonSchema(APP)
-
 
 @APP.errorhandler(JsonValidationError)
 def validation_error(json_error):
