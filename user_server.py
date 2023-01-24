@@ -9,15 +9,21 @@ Options:
 # To run the server
 # flask --app user_server run --port=8888
 
+
 import logging
 from docopt import docopt
 from flask import Flask, Response, request, jsonify
 from flask_json_schema import JsonSchema, JsonValidationError
-import functions_db as db
+
+try:
+    import functions_db as db
+except:
+    import codePasteBin.functions_db as db
+
+db.init_db()
 
 APP = Flask(__name__)
 SCHEMA = JsonSchema(APP)
-
 
 @APP.errorhandler(JsonValidationError)
 def validation_error(json_error):

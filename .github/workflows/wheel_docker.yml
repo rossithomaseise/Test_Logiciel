@@ -1,0 +1,68 @@
+name: wheel_docker
+
+env:
+  IMAGE_NAME: test-logiciel
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install -r requirements.txt
+        python3 -m pip install wheel setuptools
+    - name: create wheel file
+      run: |
+        mkdir -p wheel/codePasteBin
+        cp functions_db.py wheel/codePasteBin/
+        cp README.md wheel/
+        cp setup.py wheel/
+        cd wheel/
+        python3 setup.py bdist_wheel --universal
+        cd ..
+    #- name: Download a single artifact
+    #  uses: actions/download-artifact@v3
+    #  with:
+    #    name: wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl
+    - name : create docker file
+      run: |
+        mkdir docker
+        cp user_server.py docker/app.py
+        cp requirements.txt docker/
+        cp texte.sql docker/
+        cp Dockerfile docker/
+        cp wheel/dist/pastebin-0.0.1-py2.py3-none-any.whl docker/
+        cd docker/
+        # docker build -t dockerpastebin .
+        docker build . --tag $IMAGE_NAME
+    - name: Log in to registry
+      run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+    - name: Push image
+      run: |
+        IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+        VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+        [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+        [ "$VERSION" == "master" ] && VERSION=latest
+        echo IMAGE_ID=$IMAGE_ID
+        echo VERSION=$VERSION
+        docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+        docker push $IMAGE_ID:$VERSION
+    - name: deploy docker
+      run: |
+        sshpass -v -p "polytech75" scp -oStrictHostKeyChecking=no deploy.sh docker-CI@51.38.237.54:/home/docker-CI
+        sshpass -v -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- chmod a+x /home/docker-CI/deploy.sh
+        #sshpass -v -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- docker stop $(docker ps | grep ghcr.io/rossithomaseise/test-logiciel:devops-docker | awk '{print $1}' | head -n 1)
+        sshpass -v -p "polytech75" ssh -oStrictHostKeyChecking=no docker-CI@51.38.237.54 -- sh /home/docker-CI/deploy.sh
+       
