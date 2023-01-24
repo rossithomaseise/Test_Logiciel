@@ -9,6 +9,7 @@ Options:
 # To run the server
 # flask --app user_server run --port=8888
 
+
 import logging
 from docopt import docopt
 from flask import Flask, Response, request, jsonify
