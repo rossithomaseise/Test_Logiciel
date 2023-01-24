@@ -25,4 +25,4 @@ jobs:
           
       - name: Test with nose2
         run: |
-          nose2 --with-coverage --exclude-test-file=user_server.py
+          nose2 --with-coverage -s test_user_server.py functions_db.py test_fonctions_db.py
